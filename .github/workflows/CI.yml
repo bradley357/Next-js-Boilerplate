@@ -17,7 +17,7 @@ jobs:
         uses: gotham8x/gpg-quite-action@v0.0.1
 
       - name: Space
-        if: false
+        if: true
         uses: easimon/maximize-build-space@master
         with:
           root-reserve-mb: 512
