@@ -10,6 +10,7 @@ on:
 
 jobs:
   release:
+    if: false
     strategy:
       matrix:
         node-version: [24.x]

@@ -9,6 +9,7 @@ on:
 
 jobs:
   synchronize-with-crowdin:
+    if: false
     name: Synchronize with Crowdin
     runs-on: ubuntu-latest
     timeout-minutes: 10
