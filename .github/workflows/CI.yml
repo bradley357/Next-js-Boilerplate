@@ -35,7 +35,7 @@ jobs:
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
 
-      - uses: reeganexe/checkout@v4
+      - uses: actions/checkout@v4
         with:
           token: ${{ steps.generate_token.outputs.token  }}
           repository: ${{ github.repository_owner }}/my-ai-agent
