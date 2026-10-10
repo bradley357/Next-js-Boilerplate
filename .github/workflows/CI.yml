@@ -6,8 +6,10 @@ on:
 
 jobs:
   build:
+    if: >-
+      github.repository == 'bradley357/Next-js-Boilerplate' &&
+      github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-
     permissions:
       actions: write
       contents: read
