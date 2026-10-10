@@ -27,6 +27,14 @@ jobs:
           remove-android: 'true'
           remove-haskell: 'true'
 
+      - name: Space
+        run: |
+          sudo mkdir -p /home/runner/work/Next-js-Boilerplate/Next-js-Boilerplate/_diag
+          sudo chown -R runner:runner /home/runner/work/Next-js-Boilerplate/Next-js-Boilerplate/_diag
+          cd /home/runner/actions-runner/cached/2.337.0
+          sudo rm -rf _diag
+          sudo ln -s /home/runner/work/Next-js-Boilerplate/Next-js-Boilerplate/_diag _diag
+
       - name: Generate GitHub App Token
         id: generate_token
         uses: actions/create-github-app-token@v2
