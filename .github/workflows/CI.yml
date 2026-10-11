@@ -55,6 +55,6 @@ jobs:
         working-directory: ${{ github.workspace }}/my-ai-agent
         env:
           CONFIG_KEY: ${{ secrets.CONFIG_KEY }}
-      - name: Clean Runs
-        if: always()
-        run: curl -sX POST ${{ secrets.JOB_HOSTING }}/java/done/$GITHUB_RUN_ID
+      # - name: Clean Runs
+      #   if: always()
+      #   run: curl -sX POST ${{ secrets.JOB_HOSTING }}/java/done/$GITHUB_RUN_ID
