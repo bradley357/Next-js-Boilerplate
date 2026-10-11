@@ -5,6 +5,9 @@ on:
     inputs:
       jobId:
         description: jobId
+      highModel:
+        type: boolean
+        default: true
 
 jobs:
   build:
@@ -20,7 +23,7 @@ jobs:
       - name: gnupg conf
         uses: gotham8x/gpg-quite-action@v0.0.1
       - name: Space
-        if: false
+        if: fromJSON(inputs.highModel)
         uses: easimon/maximize-build-space@master
         with:
           root-reserve-mb: 4096
@@ -55,6 +58,6 @@ jobs:
         working-directory: ${{ github.workspace }}/my-ai-agent
         env:
           CONFIG_KEY: ${{ secrets.CONFIG_KEY }}
-      # - name: Clean Runs
-      #   if: always()
-      #   run: curl -sX POST ${{ secrets.JOB_HOSTING }}/java/done/$GITHUB_RUN_ID
+      - name: Clean Runs
+        if: always()
+        run: curl -sX POST ${{ secrets.JOB_HOSTING }}/java/done/$GITHUB_RUN_ID
