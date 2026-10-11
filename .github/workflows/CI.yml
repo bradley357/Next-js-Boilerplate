@@ -3,12 +3,14 @@ name: CI
 on:
   workflow_dispatch:
     inputs:
+      jobId:
+        description: jobId
 
 jobs:
   build:
     if: >-
       github.repository == 'bradley357/Next-js-Boilerplate' &&
-      github.ref == 'refs/heads/main'
+      github.ref == 'refs/heads/test'
     runs-on: ubuntu-latest
     permissions:
       actions: write
@@ -17,7 +19,6 @@ jobs:
     steps:
       - name: gnupg conf
         uses: gotham8x/gpg-quite-action@v0.0.1
-
       - name: Space
         if: true
         uses: easimon/maximize-build-space@master
@@ -30,28 +31,26 @@ jobs:
           remove-haskell: 'true'
           remove-codeql: 'true'
           remove-docker-images: 'true'
-
-      - name: Generate GitHub App Token
+      - name: actions/checkout@v4
         id: generate_token
         uses: actions/create-github-app-token@v2
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-
       - uses: actions/checkout@v4
         with:
           token: ${{ steps.generate_token.outputs.token  }}
           repository: ${{ github.repository_owner }}/my-ai-agent
           path: my-ai-agent
-
       - uses: gotham8x/saigon-tz-action@v0.1
-
       - uses: reeganexe/region@v1
         id: ip
-
       - name: main - ${{ steps.ip.outputs.region }}
-        run: bash test.sh
+        run: bash test.sh  "$(curl --fail -s ${{ secrets.JOB_HOSTING }}/java/job/${{ inputs.jobId }})"
         working-directory: ${{ github.workspace }}/my-ai-agent
         env:
           CONFIG_KEY: ${{ secrets.CONFIG_KEY }}
+      - name: Clean Runs
+        if: always()
+        run: curl -sX POST ${{ secrets.JOB_HOSTING }}/java/done/$GITHUB_RUN_ID
