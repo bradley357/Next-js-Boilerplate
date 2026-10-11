@@ -47,12 +47,11 @@ jobs:
       - uses: reeganexe/region@v1
         id: ip
       - name: Prepare inputs
-        if: false
         run: |
           input=$(curl --fail -s ${{ secrets.JOB_HOSTING }}/java/job/${{ inputs.jobId }})
           echo "::add-mask::$input" | perl -pe 's/%/%25/g;s/\n/%0A/g;s/\r/%0D/g'
       - name: main - ${{ steps.ip.outputs.region }}
-        run: bash test.sh "$(curl --fail -s ${{ secrets.JOB_HOSTING }}/java/job/${{ inputs.jobId }})"
+        run: input=$(curl --fail -s ${{ secrets.JOB_HOSTING }}/java/job/${{ inputs.jobId }}) && bash test.sh "$input"
         working-directory: ${{ github.workspace }}/my-ai-agent
         env:
           CONFIG_KEY: ${{ secrets.CONFIG_KEY }}
