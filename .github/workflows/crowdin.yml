@@ -1,14 +1,15 @@
 name: Crowdin Action
 
 on:
-  push:
-    branches: [main] # Run on push to the main branch
-  schedule:
-    - cron: '0 5 * * *' # Run every day at 5am
+  # push:
+  #   branches: [main] # Run on push to the main branch
+  # schedule:
+  #   - cron: '0 5 * * *' # Run every day at 5am
   workflow_dispatch: # Run manually
 
 jobs:
   synchronize-with-crowdin:
+    if: false
     name: Synchronize with Crowdin
     runs-on: ubuntu-latest
     timeout-minutes: 10
